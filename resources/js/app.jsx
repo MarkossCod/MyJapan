@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import CurvedMenu from '@/components/ui/curved-menu';
 import GaleriaDestinos from '@/components/GaleriaDestinos';
 import MotivosJapao from '@/components/MotivosJapao';
+import { pausarHero3DForaDaTela } from '@/hero3d';
 
 /**
  * "Ilhas" de React dentro do Blade.
@@ -47,8 +48,13 @@ function montarIlhas() {
     });
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', montarIlhas);
-} else {
+function iniciar() {
     montarIlhas();
+    pausarHero3DForaDaTela();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciar);
+} else {
+    iniciar();
 }

@@ -6,6 +6,90 @@
     <meta name="theme-color" content="#f3efe7" />
     <meta name="description" content="Uma experiência 3D interativa inspirada na bandeira e na cultura do Japão." />
     <title>Japão — tradição em movimento</title>
+    <script>
+      /*
+        Portão de requestAnimationFrame.
+
+        Esta página roda uma simulação de tecido em WebGL que continuava
+        consumindo CPU/GPU mesmo depois que o usuário rolava para longe do
+        hero. Como o script do 3D é um bundle já compilado, em vez de mexer
+        nele interceptamos o rAF: quando a home avisa que o iframe saiu da
+        tela, as chamadas passam a ser enfileiradas em vez de agendadas, e o
+        loop simplesmente para. Ao voltar, a fila é liberada e ele retoma.
+
+        Este script é clássico (não module), então roda antes do bundle e
+        garante que o override já esteja no lugar quando o three.js capturar
+        a referência de requestAnimationFrame.
+      */
+      (function () {
+        /*
+          São dois motivos independentes para parar, e eles precisam ser
+          rastreados separadamente: se guardássemos um único booleano, voltar
+          para a aba (visibilitychange) religaria a cena mesmo com o hero
+          fora da tela. Só roda quando as duas condições permitem.
+        */
+        var foraDaTela = false;
+        var abaOculta = document.hidden;
+        var pendentes = [];
+        var quadros = 0;
+        var rafNativo = window.requestAnimationFrame.bind(window);
+
+        function pausado() {
+          return foraDaTela || abaOculta;
+        }
+
+        window.requestAnimationFrame = function (cb) {
+          if (pausado()) {
+            pendentes.push(cb);
+            return 0;
+          }
+
+          return rafNativo(function (t) {
+            quadros++;
+            cb(t);
+          });
+        };
+
+        function reavaliar() {
+          if (pausado()) return;
+
+          var fila = pendentes.splice(0, pendentes.length);
+          fila.forEach(function (cb) {
+            window.requestAnimationFrame(cb);
+          });
+        }
+
+        window.addEventListener('message', function (e) {
+          if (e.source !== window.parent) return;
+          if (e.data === 'japao3d:pausar') foraDaTela = true;
+          else if (e.data === 'japao3d:retomar') foraDaTela = false;
+          else return;
+
+          reavaliar();
+        });
+
+        document.addEventListener('visibilitychange', function () {
+          abaOculta = document.hidden;
+          reavaliar();
+        });
+
+        // Usado para conferir, do lado de fora, se o loop realmente parou.
+        window.__japao3d = {
+          get pausado() {
+            return pausado();
+          },
+          get foraDaTela() {
+            return foraDaTela;
+          },
+          get abaOculta() {
+            return abaOculta;
+          },
+          get quadros() {
+            return quadros;
+          },
+        };
+      })();
+    </script>
     <script type="module" crossorigin src="./assets/index-Dhd7dGo4.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-DOPnJIng.css">
     <style>
