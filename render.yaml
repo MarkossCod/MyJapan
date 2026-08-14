@@ -1,0 +1,48 @@
+# Blueprint do Render.
+#
+# O site não usa banco de dados — todas as páginas são views estáticas — então
+# sessão, cache e fila ficam fora do banco. Isso evita provisionar um Postgres
+# e o problema do disco efêmero do Render, que apagaria um SQLite a cada deploy.
+
+services:
+  - type: web
+    name: myjapan
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /
+
+    envVars:
+      - key: APP_NAME
+        value: MyJapan
+
+      - key: APP_ENV
+        value: production
+
+      - key: APP_DEBUG
+        value: "false"
+
+      # Gere com `php artisan key:generate --show` e cole no painel do Render.
+      # sync:false = o valor não fica versionado neste arquivo.
+      - key: APP_KEY
+        sync: false
+
+      # Preencha com a URL pública do serviço depois do primeiro deploy.
+      - key: APP_URL
+        sync: false
+
+      # Logs vão para a saída padrão, que é onde o Render lê.
+      - key: LOG_CHANNEL
+        value: stderr
+
+      - key: LOG_LEVEL
+        value: warning
+
+      - key: SESSION_DRIVER
+        value: cookie
+
+      - key: CACHE_STORE
+        value: file
+
+      - key: QUEUE_CONNECTION
+        value: sync

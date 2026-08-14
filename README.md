@@ -84,6 +84,30 @@ public/
 | `/passagens` | Comprar Passagens *(em construção)* |
 | `/quem-somos` | Quem somos *(em construção)* |
 
+## Deploy no Render
+
+O Render não tem runtime PHP nativo, então a aplicação sobe como container
+(`Dockerfile` na raiz: nginx + php-fpm, com os assets compilados no build).
+
+O site não usa banco de dados, então sessão, cache e fila ficam fora dele —
+o disco do Render é efêmero e apagaria um SQLite a cada deploy.
+
+1. No Render: **New → Blueprint**, aponte para este repositório. Ele lê o
+   `render.yaml` e cria o serviço.
+2. Gere a chave da aplicação localmente e copie o valor:
+
+   ```bash
+   php artisan key:generate --show
+   ```
+
+3. No painel do serviço, em **Environment**, defina:
+   - `APP_KEY` — o valor gerado acima (começa com `base64:`)
+   - `APP_URL` — a URL pública do serviço (ex.: `https://myjapan.onrender.com`)
+4. Dispare o deploy. O build leva alguns minutos na primeira vez.
+
+> No plano gratuito o serviço hiberna após ~15 min sem acesso, e o primeiro
+> acesso seguinte pode levar cerca de um minuto para responder.
+
 ## Créditos
 
 - Galeria baseada no **Skiper 52 — HoverExpand** ([Skiper UI](https://skiper-ui.com)),
