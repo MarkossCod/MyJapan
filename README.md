@@ -1,58 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MyJapan
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Site de viagens para o Japão: uma experiência 3D interativa, os motivos para
+conhecer o país e uma galeria com os destinos imperdíveis.
 
-## About Laravel
+## Tecnologias
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Laravel 12** com views em Blade
+- **Tailwind CSS 4** via `@tailwindcss/vite`
+- **React 18** montado como *ilhas* dentro do Blade (sem SPA)
+- **Framer Motion** (menu curvo e galeria) e **GSAP ScrollTrigger** (texto revelado na rolagem)
+- **Vite 8** para o build dos assets
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Como rodar
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Pré-requisitos: PHP 8.3+, Composer e Node 20+.
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Durante o desenvolvimento, com o Vite servindo os assets:
 
-## Contributing
+```bash
+npm run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Em outro terminal:
 
-## Code of Conduct
+```bash
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Para gerar os assets de produção:
 
-## Security Vulnerabilities
+```bash
+npm run build
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+> `public/build/` não é versionado — rode `npm run build` no deploy.
 
-## License
+## Ilhas de React no Blade
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Os componentes React são montados por um atributo `data-react`. No Blade:
+
+```blade
+<div data-react="galeria-destinos"></div>
+```
+
+O mapeamento de nomes fica em `resources/js/app.jsx`. Props opcionais podem ser
+passadas como JSON em `data-props`.
+
+## Estrutura
+
+```text
+resources/
+├── css/app.css                  # tema, embed 3D e botão de flores
+├── js/
+│   ├── app.jsx                  # monta as ilhas de React
+│   ├── components/
+│   │   ├── GaleriaDestinos.tsx  # dados da galeria
+│   │   ├── MotivosJapao.jsx     # texto com ScrollReveal
+│   │   └── ui/                  # componentes de base
+│   └── lib/utils.ts             # helper cn()
+└── views/
+    ├── index.blade.php          # homepage
+    ├── layouts/app.blade.php
+    └── partials/
+
+public/
+├── japao-3d/                    # bundle estático da experiência 3D
+└── images/galeria/              # fotos dos destinos
+```
+
+## Páginas
+
+| Rota | Descrição |
+| --- | --- |
+| `/` | Homepage: hero 3D, texto de apresentação e galeria |
+| `/planeje` | Planeje a sua viagem *(em construção)* |
+| `/passagens` | Comprar Passagens *(em construção)* |
+| `/quem-somos` | Quem somos *(em construção)* |
+
+## Créditos
+
+- Galeria baseada no **Skiper 52 — HoverExpand** ([Skiper UI](https://skiper-ui.com)),
+  de [@gurvinder-singh02](https://gxuri.me). O uso da versão gratuita exige atribuição.
+- Texto animado baseado no **ScrollReveal** do [React Bits](https://reactbits.dev).
+
+## Licença
+
+MIT — veja [LICENSE](LICENSE).
