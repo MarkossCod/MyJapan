@@ -1,0 +1,273 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../js/**/*.{js,jsx,ts,tsx}';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Paleta do projeto: vermelho da bandeira + tons de papel/sumi. */
+    --color-japao-vermelho: #bc002d;
+    --color-japao-papel: #f3efe7;
+    --color-japao-tinta: #1c1b19;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+body {
+    background-color: var(--color-japao-papel);
+    color: var(--color-japao-tinta);
+}
+
+/* Bloco de integração da experiência 3D (public/japao-3d). */
+.japao-3d-embed {
+    width: 100%;
+    height: min(900px, 100svh);
+    min-height: 620px;
+    overflow: hidden;
+    background: var(--color-japao-papel);
+}
+
+.japao-3d-embed iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+@media (max-width: 800px) {
+    .japao-3d-embed {
+        height: 100svh;
+        min-height: 760px;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   Botão "flores" (CTA da home).
+   Adaptado do componente Vue original: as pétalas azuis foram trocadas por
+   tons de sakura, com o vermelho da bandeira no hover.
+--------------------------------------------------------------------------- */
+
+.btn-flor {
+    display: inline-flex;
+    height: 5em;
+    width: 15em;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.flor-wrapper {
+    position: relative;
+    display: flex;
+    height: 2em;
+    width: 11em;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.flor-text {
+    position: relative;
+    z-index: 1;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--color-japao-tinta);
+    background: rgba(243, 239, 231, 0.75);
+    transition: background 0.5s ease;
+}
+
+.flor {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1em 1em;
+    transition: grid-template-columns 0.8s ease;
+}
+
+.flor1 {
+    top: -12px;
+    left: -13px;
+    transform: rotate(5deg);
+}
+
+.flor2 {
+    bottom: -5px;
+    left: 8px;
+    transform: rotate(35deg);
+}
+
+.flor3 {
+    bottom: -15px;
+    transform: rotate(0deg);
+}
+
+.flor4 {
+    top: -14px;
+    transform: rotate(15deg);
+}
+
+.flor5 {
+    right: 11px;
+    top: -3px;
+    transform: rotate(25deg);
+}
+
+.flor6 {
+    right: -15px;
+    bottom: -15px;
+    transform: rotate(30deg);
+}
+
+.petala {
+    z-index: 0;
+    height: 1em;
+    width: 1em;
+    border-radius: 40% 70% / 7% 90%;
+    background: linear-gradient(#d9738f, #fbe0e8);
+    border: 0.5px solid #f0b8c8;
+    transition:
+        width 0.8s ease,
+        height 0.8s ease,
+        background 0.5s ease,
+        border-color 0.5s ease;
+}
+
+.petala.two {
+    transform: rotate(90deg);
+}
+
+.petala.three {
+    transform: rotate(270deg);
+}
+
+.petala.four {
+    transform: rotate(180deg);
+}
+
+.btn-flor:hover .petala,
+.btn-flor:focus-visible .petala {
+    background: linear-gradient(var(--color-japao-vermelho), #f0a8bb);
+    border-color: #d98da3;
+}
+
+.btn-flor:hover .flor,
+.btn-flor:focus-visible .flor {
+    grid-template-columns: 1.5em 1.5em;
+}
+
+.btn-flor:hover .flor .petala,
+.btn-flor:focus-visible .flor .petala {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.btn-flor:hover .flor-text,
+.btn-flor:focus-visible .flor-text {
+    background: rgba(243, 239, 231, 0.45);
+}
+
+.btn-flor:focus-visible {
+    outline: 2px solid var(--color-japao-vermelho);
+    outline-offset: 4px;
+    border-radius: 8px;
+}
+
+.btn-flor:hover .flor1 {
+    animation: flor1 15s linear 0s infinite;
+}
+
+.btn-flor:hover .flor2 {
+    animation: flor2 13s linear 1s infinite;
+}
+
+.btn-flor:hover .flor3 {
+    animation: flor3 16s linear 1s infinite;
+}
+
+.btn-flor:hover .flor4 {
+    animation: flor4 17s linear 1s infinite;
+}
+
+.btn-flor:hover .flor5 {
+    animation: flor5 20s linear 1s infinite;
+}
+
+.btn-flor:hover .flor6 {
+    animation: flor6 15s linear 1s infinite;
+}
+
+@keyframes flor1 {
+    0% {
+        transform: rotate(5deg);
+    }
+    100% {
+        transform: rotate(365deg);
+    }
+}
+
+@keyframes flor2 {
+    0% {
+        transform: rotate(35deg);
+    }
+    100% {
+        transform: rotate(-325deg);
+    }
+}
+
+@keyframes flor3 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes flor4 {
+    0% {
+        transform: rotate(15deg);
+    }
+    100% {
+        transform: rotate(375deg);
+    }
+}
+
+@keyframes flor5 {
+    0% {
+        transform: rotate(25deg);
+    }
+    100% {
+        transform: rotate(-335deg);
+    }
+}
+
+@keyframes flor6 {
+    0% {
+        transform: rotate(30deg);
+    }
+    100% {
+        transform: rotate(390deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-flor:hover .flor {
+        animation: none;
+    }
+}

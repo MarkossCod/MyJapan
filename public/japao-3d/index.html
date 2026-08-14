@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#f3efe7" />
+    <meta name="description" content="Uma experiência 3D interativa inspirada na bandeira e na cultura do Japão." />
+    <title>Japão — tradição em movimento</title>
+    <script type="module" crossorigin src="./assets/index-Dhd7dGo4.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DOPnJIng.css">
+    <style>
+      /* Esta página é embutida em um iframe na home. Escondemos a barra de
+         rolagem interna para não aparecerem duas barras lado a lado.
+         A rolagem continua funcionando — apenas a barra fica invisível. */
+      html {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="hero">
+      <section class="copy" aria-labelledby="hero-title">
+        <p class="eyebrow">日本 · JAPÃO</p>
+        <h1 id="hero-title">Conheça mais<br />o <em>Japão.</em></h1>
+        <p class="lede">Entre templos silenciosos, cidades vibrantes e paisagens que mudam a cada estação, há sempre um novo Japão para descobrir.</p>
+        <a class="cta" href="https://www.japan.travel/pt/br/" target="_blank" rel="noreferrer">
+          <span>Saiba mais</span><span aria-hidden="true">↗</span>
+        </a>
+      </section>
+
+      <section class="stage" aria-label="Bandeira 3D interativa do Japão">
+        <div id="canvas-wrap" tabindex="0" role="application" aria-label="Arraste a bandeira para fazê-la balançar. Arraste fora dela para girar. Use as setas do teclado para girar e a barra de espaço para criar uma rajada.">
+          <canvas id="scene"></canvas>
+          <div class="hint" aria-hidden="true">
+            <span class="gesture">⌁</span>
+            <span><strong>Arraste a bandeira</strong> para criar movimento</span>
+          </div>
+          <div class="loader" id="loader"><span></span><p>Preparando a experiência</p></div>
+        </div>
+        <button class="recenter" id="recenter" type="button" aria-label="Centralizar a bandeira na tela">
+          <span class="recenter-icon" aria-hidden="true">◎</span>
+          <span>Centralizar</span>
+        </button>
+      </section>
+
+      <p class="scroll-note" aria-hidden="true">Explore em 360°</p>
+      <div class="sun-mark" aria-hidden="true"></div>
+    </main>
+  </body>
+</html>
