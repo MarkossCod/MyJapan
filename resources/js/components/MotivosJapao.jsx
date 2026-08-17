@@ -9,6 +9,9 @@ const TEXTO =
 export default function MotivosJapao() {
     return (
         <ScrollReveal
+            // O padrao do componente e <h2>, mas aqui o conteudo e um
+            // paragrafo -- e a secao ja tem o proprio <h2> no Blade.
+            as="div"
             baseOpacity={0}
             enableBlur={true}
             baseRotation={5}

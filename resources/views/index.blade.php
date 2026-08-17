@@ -18,8 +18,8 @@
     {{-- 2. Texto com animação ScrollReveal: por que conhecer o Japão. --}}
     {{-- overflow-hidden: a rotação inicial do ScrollReveal aumenta a caixa do
          texto e criaria rolagem horizontal no celular sem esse recorte. --}}
-    <section id="por-que-japao" class="overflow-hidden px-6 py-24 sm:py-32" aria-labelledby="por-que-japao-titulo">
-        <div class="mx-auto max-w-4xl">
+    <section id="por-que-japao" class="alinhado-hero overflow-hidden py-24 sm:py-32" aria-labelledby="por-que-japao-titulo">
+        <div class="max-w-4xl">
             {{-- Kicker no mesmo padrão do rodapé e do hero 3D: kanji + rótulo
                  curto em vermelho, precedido de uma régua fina. --}}
             <p class="flex items-center gap-4 text-[0.7rem] font-semibold tracking-[0.34em] text-japao-vermelho uppercase">
@@ -28,10 +28,19 @@
             </p>
 
             {{-- Antes este título era sr-only e a seção abria direto no
-                 parágrafo. Agora ele aparece e ancora a seção visualmente. --}}
-            <h2 id="por-que-japao-titulo" class="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl">
-                Duas eras vivendo<br class="hidden sm:block">
-                <span class="text-japao-vermelho">no mesmo país</span>
+                 parágrafo. Agora ele aparece, ancora a seção e recebe a mesma
+                 revelação palavra a palavra do texto logo abaixo.
+
+                 O texto fica escrito aqui dentro de propósito: se o JS não
+                 rodar, o título continua legível — a ilha React só substitui o
+                 conteúdo por spans animados quando monta. --}}
+            <h2 id="por-que-japao-titulo" class="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl md:text-6xl">
+                <span
+                    data-react="titulo-revelado"
+                    {{-- @json precisa ficar numa linha só: quebrar o array faz o
+                         parser do Blade encerrar o argumento cedo demais. --}}
+                    data-props='@json(['texto' => 'Duas eras vivendo no mesmo país', 'destaqueApartirDe' => 3, 'quebraApartirDe' => 3])'
+                >Duas eras vivendo <span class="text-japao-vermelho">no mesmo país</span></span>
             </h2>
 
             {{-- Ilha React: o texto é revelado palavra a palavra conforme a rolagem. --}}
@@ -41,7 +50,7 @@
 
     {{-- 3. Galeria de destinos (efeito hover expand / carrossel no celular). --}}
     <section id="destinos" class="px-0 py-20 sm:py-24" aria-labelledby="destinos-titulo">
-        <div class="mx-auto mb-10 max-w-6xl px-6">
+        <div class="alinhado-hero mb-10 max-w-6xl">
             <p class="flex items-center gap-4 text-[0.7rem] font-semibold tracking-[0.34em] text-japao-vermelho uppercase">
                 <span class="h-px w-10 shrink-0 bg-japao-vermelho/50" aria-hidden="true"></span>
                 <span><span aria-hidden="true">目的地 · </span>Destinos</span>
@@ -57,7 +66,7 @@
 
         <div data-react="galeria-destinos"></div>
 
-        <div class="mx-auto mt-10 max-w-6xl px-6">
+        <div class="alinhado-hero mt-10 max-w-6xl">
             @include('partials.btn-flor', [
                 'href' => '/planeje',
                 'label' => 'Planeje a sua viagem',

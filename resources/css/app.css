@@ -29,6 +29,31 @@ body {
     color: var(--color-japao-tinta);
 }
 
+/* ---------------------------------------------------------------------------
+   Alinhamento com o título do hero.
+
+   O "Conheça mais o Japão." vive dentro do iframe e começa no recuo definido
+   em public/japao-3d/index.html. Os títulos das seções seguintes usavam
+   `mx-auto`, então ficavam centralizados e desencontrados dele. Esta classe
+   repete exatamente aquele recuo para que tudo caia na mesma linha vertical.
+
+   Se o recuo mudar lá, mude aqui também — são dois documentos separados e não
+   há como compartilhar a variável entre eles.
+--------------------------------------------------------------------------- */
+
+.alinhado-hero {
+    padding-left: clamp(1.35rem, 4.6vw, 5rem);
+    padding-right: 1.5rem;
+}
+
+@media (max-width: 800px) {
+    /* Abaixo de 800px o hero vira coluna única e passa a usar recuo fixo. */
+    .alinhado-hero {
+        padding-left: 1.35rem;
+        padding-right: 1.35rem;
+    }
+}
+
 /* Bloco de integração da experiência 3D (public/japao-3d). */
 .japao-3d-embed {
     width: 100%;

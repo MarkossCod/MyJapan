@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -17,20 +17,54 @@ const ScrollReveal = ({
     textClassName = '',
     rotationEnd = 'bottom bottom',
     wordAnimationEnd = 'bottom bottom',
+    // As tags sao configuraveis porque o mesmo efeito serve para paragrafo e
+    // para titulo. O padrao <h2><p> so faz sentido no caso do paragrafo -- e
+    // olhe que <p> dentro de <h2> nem e HTML valido; quando o componente for
+    // usado dentro de um <h2> que ja existe no Blade, passe as="span".
+    as: Tag = 'h2',
+    textAs: TextTag = 'p',
+    // Indice da palavra a partir da qual aplicar `highlightClassName`. Serve
+    // para colorir so a segunda linha de um titulo, por exemplo.
+    highlightFrom = null,
+    highlightClassName = '',
+    // Indice da palavra que abre uma nova linha. Deixar a quebra a cargo de um
+    // max-width nao funciona aqui: as palavras sao inline-block e o ponto de
+    // quebra depende da fonte carregada, entao o <br> explicito e o unico jeito
+    // de garantir sempre o mesmo desenho.
+    breakBefore = null,
+    breakClassName = '',
 }) => {
     const containerRef = useRef(null);
 
     const splitText = useMemo(() => {
         const text = typeof children === 'string' ? children : '';
+        // `indicePalavra` conta so as palavras (os espacos voltam crus), para
+        // que `highlightFrom` seja um indice previsivel de escrever na chamada.
+        let indicePalavra = -1;
+
         return text.split(/(\s+)/).map((word, index) => {
             if (word.match(/^\s+$/)) return word;
-            return (
-                <span className="word" key={index}>
+            indicePalavra += 1;
+
+            const destacada = highlightFrom !== null && indicePalavra >= highlightFrom;
+            const quebra = breakBefore !== null && indicePalavra === breakBefore;
+
+            const span = (
+                <span className={destacada ? `word ${highlightClassName}` : 'word'} key={index}>
                     {word}
                 </span>
             );
+
+            if (!quebra) return span;
+
+            return (
+                <Fragment key={index}>
+                    <br className={breakClassName} />
+                    {span}
+                </Fragment>
+            );
         });
-    }, [children]);
+    }, [children, highlightFrom, highlightClassName, breakBefore, breakClassName]);
 
     useEffect(() => {
         const el = containerRef.current;
@@ -119,9 +153,9 @@ const ScrollReveal = ({
     }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 
     return (
-        <h2 ref={containerRef} className={`scroll-reveal ${containerClassName}`}>
-            <p className={`scroll-reveal-text ${textClassName}`}>{splitText}</p>
-        </h2>
+        <Tag ref={containerRef} className={`scroll-reveal ${containerClassName}`}>
+            <TextTag className={`scroll-reveal-text ${textClassName}`}>{splitText}</TextTag>
+        </Tag>
     );
 };
 

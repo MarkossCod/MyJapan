@@ -10,6 +10,21 @@
     font-weight: 500;
 }
 
+/* Variante usada quando o efeito envolve um título: quem manda no tamanho e
+   no peso passa a ser o <h2> do Blade, não os valores de parágrafo acima.
+   A especificidade dupla é de propósito — precisa vencer as regras anteriores
+   sem depender da ordem em que os arquivos CSS entram no bundle. */
+.scroll-reveal.is-titulo {
+    margin: 0;
+}
+
+.scroll-reveal-text.is-titulo {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+}
+
 .word {
     display: inline-block;
     will-change: opacity, filter;
