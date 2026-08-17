@@ -18,11 +18,13 @@
     {{-- 2. Texto com animação ScrollReveal: por que conhecer o Japão. --}}
     {{-- overflow-hidden: a rotação inicial do ScrollReveal aumenta a caixa do
          texto e criaria rolagem horizontal no celular sem esse recorte. --}}
-    <section id="por-que-japao" class="alinhado-hero overflow-hidden py-24 sm:py-32" aria-labelledby="por-que-japao-titulo">
-        <div class="max-w-4xl">
+    <section id="por-que-japao" class="overflow-hidden px-6 py-24 sm:py-32" aria-labelledby="por-que-japao-titulo">
+        {{-- Única seção centralizada da home: serve de respiro entre o hero e a
+             galeria, ambos alinhados à esquerda. --}}
+        <div class="mx-auto max-w-5xl text-center">
             {{-- Kicker no mesmo padrão do rodapé e do hero 3D: kanji + rótulo
                  curto em vermelho, precedido de uma régua fina. --}}
-            <p class="flex items-center gap-4 text-[0.7rem] font-semibold tracking-[0.34em] text-japao-vermelho uppercase">
+            <p class="flex items-center justify-center gap-4 text-[0.7rem] font-semibold tracking-[0.34em] text-japao-vermelho uppercase">
                 <span class="h-px w-10 shrink-0 bg-japao-vermelho/50" aria-hidden="true"></span>
                 <span><span aria-hidden="true">理由 · </span>Por que ir</span>
             </p>
@@ -39,7 +41,9 @@
                     data-react="titulo-revelado"
                     {{-- @json precisa ficar numa linha só: quebrar o array faz o
                          parser do Blade encerrar o argumento cedo demais. --}}
-                    data-props='@json(['texto' => 'Duas eras vivendo no mesmo país', 'destaqueApartirDe' => 3, 'quebraApartirDe' => 3])'
+                    {{-- Sem quebraApartirDe: o título agora ocupa uma linha só.
+                         Em telas estreitas ele quebra naturalmente. --}}
+                    data-props='@json(['texto' => 'Duas eras vivendo no mesmo país', 'destaqueApartirDe' => 3])'
                 >Duas eras vivendo <span class="text-japao-vermelho">no mesmo país</span></span>
             </h2>
 

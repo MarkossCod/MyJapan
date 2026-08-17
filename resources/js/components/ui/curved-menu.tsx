@@ -313,24 +313,28 @@ const Header: React.FC<iHeaderProps> = ({
                 aria-label={isActive ? 'Fechar menu' : 'Abrir menu'}
                 aria-expanded={isActive}
                 aria-controls="menu-principal"
-                className={`group fixed top-0 left-0 z-50 m-4 flex h-12 w-12 cursor-pointer items-center justify-center rounded-xl transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-[#bc002d] focus-visible:outline-none md:m-6 ${
-                    isActive ? 'bg-transparent' : 'bg-[#f3efe7] hover:bg-[#e9e3d7]'
+                className={`group fixed top-0 left-0 z-50 m-4 flex h-12 w-12 cursor-pointer items-center justify-center rounded-xl border transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-[#bc002d] focus-visible:outline-none md:m-6 ${
+                    isActive
+                        ? 'border-transparent bg-transparent'
+                        : 'border-[#1c1b19]/15 bg-[#f3efe7] hover:border-[#1c1b19]/30 hover:bg-[#e9e3d7]'
                 }`}
             >
-                <span className="relative flex h-4 w-7 flex-col justify-between" aria-hidden="true">
+                {/* Barras de larguras iguais: o escalonamento anterior deixava o
+                    ícone com aparência irregular. */}
+                <span className="relative flex h-4 w-6 flex-col justify-between" aria-hidden="true">
                     <span
-                        className={`block h-[2px] rounded-full bg-[#1c1b19] transition-all duration-300 ${
-                            isActive ? 'w-7 translate-y-[7px] rotate-45' : 'w-7'
+                        className={`block h-[2px] w-6 rounded-full bg-[#1c1b19] transition-transform duration-300 ${
+                            isActive ? 'translate-y-[7px] rotate-45' : ''
                         }`}
                     />
                     <span
-                        className={`block h-[2px] rounded-full bg-[#1c1b19] transition-all duration-300 ${
-                            isActive ? 'w-7 opacity-0' : 'w-5 group-hover:w-7'
+                        className={`block h-[2px] w-6 rounded-full bg-[#1c1b19] transition-opacity duration-300 ${
+                            isActive ? 'opacity-0' : ''
                         }`}
                     />
                     <span
-                        className={`block h-[2px] rounded-full bg-[#1c1b19] transition-all duration-300 ${
-                            isActive ? 'w-7 -translate-y-[7px] -rotate-45' : 'w-6 group-hover:w-7'
+                        className={`block h-[2px] w-6 rounded-full bg-[#1c1b19] transition-transform duration-300 ${
+                            isActive ? '-translate-y-[7px] -rotate-45' : ''
                         }`}
                     />
                 </span>
