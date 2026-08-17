@@ -55,6 +55,89 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
+   Botão pílula com a seta que "troca de lugar".
+
+   São duas cópias da mesma seta dentro de um círculo com `overflow: hidden`.
+   No hover a primeira sai pela diagonal superior direita e a segunda, que
+   estava escondida na diagonal oposta, entra logo atrás — dá a impressão de
+   um movimento contínuo em vez de um ícone que apenas se desloca.
+
+   A cor vem da variável --clr, definida em quem usa o botão.
+--------------------------------------------------------------------------- */
+
+.btn-seta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.6rem 0.85rem 1.25rem;
+    border: none;
+    border-radius: 10rem;
+    background-color: var(--clr);
+    color: #fff;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-seta:hover {
+    background-color: var(--color-japao-tinta);
+}
+
+.btn-seta:focus-visible {
+    outline: 2px solid var(--color-japao-vermelho);
+    outline-offset: 3px;
+}
+
+.btn-seta__icone {
+    display: grid;
+    place-items: center;
+    position: relative;
+    flex-shrink: 0;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: var(--clr);
+    overflow: hidden;
+    transition: color 0.3s;
+}
+
+.btn-seta:hover .btn-seta__icone {
+    color: var(--color-japao-tinta);
+}
+
+/* A segunda seta espera fora do círculo, na diagonal de baixo à esquerda. */
+.btn-seta__seta--copia {
+    position: absolute;
+    transform: translate(-150%, 150%);
+}
+
+.btn-seta:hover .btn-seta__seta:first-child {
+    transform: translate(150%, -150%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-seta:hover .btn-seta__seta--copia {
+    transform: translate(0);
+    transition: transform 0.3s ease-in-out 0.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-seta .btn-seta__seta,
+    .btn-seta:hover .btn-seta__seta {
+        transition: none;
+        transform: none;
+    }
+
+    .btn-seta__seta--copia {
+        display: none;
+    }
+}
+
+/* ---------------------------------------------------------------------------
    Faixa deslizante (componente Marquee).
 
    O componente renderiza o conteúdo duas vezes; deslocar a trilha em -50% faz

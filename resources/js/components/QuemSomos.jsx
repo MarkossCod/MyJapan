@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
-
 import ModalContato from '@/components/ModalContato';
+import BotaoSeta from '@/components/ui/botao-seta';
+import { LogoLaravel, LogoReact, LogoTailwind, LogoThree, LogoVite, PlacaInstituicao } from '@/components/ui/logos';
 import Marquee from '@/components/ui/marquee';
 import { TimelineContent } from '@/components/ui/timeline-animation';
 import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal';
@@ -29,31 +29,27 @@ const variantesEscala = {
 
 /*
     A faixa tem dois grupos: de onde o projeto veio e com o que ele foi feito.
-    São marcas de terceiros e não temos os arquivos oficiais, então entram como
-    tipografia — o que também combina melhor com o tom sóbrio do site do que
-    logos coloridos.
+    As instituições entram como placa vermelha (elas não têm um símbolo isolado);
+    as ferramentas, como marca + nome.
 */
 const INSTITUICOES = ['SENAI', 'FIEPE', 'SESI', 'IEL'];
-const TECNOLOGIAS = ['Laravel', 'React', 'Tailwind', 'Vite', 'Three.js'];
-
-function ItemFaixa({ children, destaque = false }) {
-    return (
-        <span
-            className={`mx-8 flex shrink-0 items-center text-lg font-semibold tracking-[0.18em] uppercase sm:mx-12 sm:text-xl ${
-                destaque ? 'text-japao-vermelho' : 'text-black/35'
-            }`}
-        >
-            {children}
-        </span>
-    );
-}
+const TECNOLOGIAS = [
+    { nome: 'Laravel', Logo: LogoLaravel },
+    { nome: 'React', Logo: LogoReact },
+    { nome: 'Tailwind', Logo: LogoTailwind },
+    { nome: 'Vite', Logo: LogoVite },
+    { nome: 'Three.js', Logo: LogoThree },
+];
 
 export default function QuemSomos() {
     const [modalAberto, setModalAberto] = useState(false);
 
     return (
-        <section className="px-4 py-10 sm:py-14">
-            <div className="mx-auto max-w-6xl">
+        <section className="px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
+            {/* Antes limitado a max-w-6xl (1152px), o que deixava metade das
+                telas grandes vazia. Agora ocupa a largura disponivel com uma
+                margem generosa, e o teto so entra em monitores muito largos. */}
+            <div className="mx-auto w-full max-w-[1800px]">
                 <div className="relative">
                     {/* Cabeçalho flutuante sobre a imagem. */}
                     <div className="absolute -top-3 z-10 flex w-[85%] items-center justify-between sm:-top-2 md:top-0 lg:top-4">
@@ -78,7 +74,12 @@ export default function QuemSomos() {
                         customVariants={variantesEscala}
                         className="group relative"
                     >
-                        <svg className="w-full" width="100%" height="100%" viewBox="0 0 100 40" role="img" aria-label="Placa do SENAI ao lado da bandeira do Japão">
+                        {/* A caixa e mais baixa que o 100x40 do modelo: com a pagina ocupando
+                            a largura inteira, 40 de altura viravam mais de 700px de
+                            recorte e o bloco engolia a tela. Como o `slice` corta pelo
+                            eixo que sobra, o que se perde aqui e a margem branca do
+                            SVG — a placa, que fica no centro, continua inteira. */}
+                        <svg className="w-full" width="100%" height="100%" viewBox="0 0 100 28" role="img" aria-label="Placa do SENAI ao lado da bandeira do Japão">
                             <defs>
                                 <clipPath id="recorte-quem-somos" clipPathUnits="objectBoundingBox">
                                     <path d="M0.0998072 1H0.422076H0.749756C0.767072 1 0.774207 0.961783 0.77561 0.942675V0.807325C0.777053 0.743631 0.791844 0.731953 0.799059 0.734076H0.969813C0.996268 0.730255 1.00088 0.693206 0.999875 0.675159V0.0700637C0.999875 0.0254777 0.985045 0.00477707 0.977629 0H0.902473C0.854975 0 0.890448 0.138535 0.850165 0.138535H0.0204424C0.00408849 0.142357 0 0.180467 0 0.199045V0.410828C0 0.449045 0.0136283 0.46603 0.0204424 0.469745H0.0523086C0.0696245 0.471019 0.0735527 0.497877 0.0733523 0.511146V0.915605C0.0723903 0.983121 0.090588 1 0.0998072 1Z" />
@@ -121,7 +122,7 @@ export default function QuemSomos() {
                                 as="div"
                                 animationNum={3}
                                 customVariants={variantesRevelar}
-                                className="mb-2 flex items-center gap-2 text-2xl sm:text-3xl lg:text-4xl"
+                                className="mb-2 flex items-center gap-2 text-2xl sm:text-3xl lg:text-4xl xl:text-5xl"
                             >
                                 <span className="font-semibold text-japao-vermelho">47</span>
                                 <span className="text-black/60 uppercase">prefeituras</span>
@@ -144,20 +145,28 @@ export default function QuemSomos() {
                 <div className="border-y border-black/10">
                     <Marquee pauseOnHover speed={38} className="mt-0">
                         {INSTITUICOES.map((nome) => (
-                            <ItemFaixa key={nome} destaque>
-                                {nome}
-                            </ItemFaixa>
+                            <span key={nome} className="mx-8 flex shrink-0 items-center sm:mx-12">
+                                <PlacaInstituicao nome={nome} />
+                            </span>
                         ))}
-                        {TECNOLOGIAS.map((nome) => (
-                            <ItemFaixa key={nome}>{nome}</ItemFaixa>
+                        {TECNOLOGIAS.map(({ nome, Logo }) => (
+                            <span
+                                key={nome}
+                                className="mx-8 flex shrink-0 items-center gap-3 text-black/40 sm:mx-12"
+                            >
+                                <Logo />
+                                <span className="text-base font-semibold tracking-[0.16em] uppercase sm:text-lg">
+                                    {nome}
+                                </span>
+                            </span>
                         ))}
                     </Marquee>
                 </div>
 
                 {/* Conteúdo */}
-                <div className="grid gap-8 pt-12 md:grid-cols-3">
+                <div className="grid gap-8 pt-12 md:grid-cols-3 xl:gap-14 xl:pt-16">
                     <div className="md:col-span-2">
-                        <h1 className="mb-8 text-2xl leading-[110%] font-semibold tracking-tight sm:text-4xl md:text-5xl">
+                        <h1 className="mb-8 text-2xl leading-[110%] font-semibold tracking-tight sm:text-4xl md:text-5xl xl:text-6xl">
                             <VerticalCutReveal
                                 splitBy="words"
                                 staggerDuration={0.08}
@@ -173,16 +182,16 @@ export default function QuemSomos() {
                             as="div"
                             animationNum={5}
                             customVariants={variantesRevelar}
-                            className="grid gap-8 text-black/60 md:grid-cols-2"
+                            className="grid gap-8 text-black/60 md:grid-cols-2 xl:gap-12"
                         >
-                            <div className="text-xs sm:text-base">
+                            <div className="text-xs sm:text-base xl:text-lg">
                                 <p className="leading-relaxed">
                                     O MyJapan nasceu numa sala de aula do SENAI, de uma pergunta simples: por que
                                     planejar uma viagem ao Japão ainda parece difícil? Reunimos roteiros, estações e
                                     destinos num lugar só, em português e sem jargão.
                                 </p>
                             </div>
-                            <div className="text-xs sm:text-base">
+                            <div className="text-xs sm:text-base xl:text-lg">
                                 <p className="leading-relaxed">
                                     Cada página é feita para quem nunca foi: a experiência 3D da bandeira, a galeria de
                                     destinos e os textos existem para transformar um país distante em algo que dá
@@ -219,14 +228,14 @@ export default function QuemSomos() {
                                 <p className="mb-4 font-medium">Pronto para escolher a sua primeira parada?</p>
                             </TimelineContent>
                             <TimelineContent
-                                as="button"
+                                as="div"
                                 animationNum={9}
                                 customVariants={variantesRevelar}
-                                type="button"
-                                onClick={() => setModalAberto(true)}
-                                className="ml-auto flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-black/10 bg-japao-tinta px-5 py-3 font-semibold text-white shadow-lg shadow-black/20 transition-all duration-300 ease-in-out hover:gap-4 hover:bg-black focus-visible:ring-2 focus-visible:ring-japao-vermelho focus-visible:ring-offset-2 focus-visible:outline-none"
+                                className="flex justify-end"
                             >
-                                FALE COM A GENTE <ArrowRight size={18} />
+                                <BotaoSeta cor="#bc002d" onClick={() => setModalAberto(true)}>
+                                    FALE COM A GENTE
+                                </BotaoSeta>
                             </TimelineContent>
                         </div>
                     </div>
