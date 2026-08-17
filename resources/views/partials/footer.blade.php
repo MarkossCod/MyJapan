@@ -38,8 +38,11 @@
         </div>
     </div>
 
+    {{-- O `mx-auto` centralizava só a caixa; o texto continuava encostado na
+         borda esquerda dela, o que dava a impressão de desalinhamento com a
+         coluna "MyJapan" logo acima. O `text-center` centraliza o conteúdo. --}}
     <div class="border-t border-black/10 px-6 py-5">
-        <p class="mx-auto max-w-6xl text-xs text-black/50">
+        <p class="mx-auto max-w-6xl text-center text-xs text-black/50">
             © {{ date('Y') }} MyJapan. Projeto acadêmico, sem fins comerciais.
         </p>
     </div>
