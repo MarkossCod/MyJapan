@@ -45,14 +45,15 @@ export default function QuemSomos() {
     const [modalAberto, setModalAberto] = useState(false);
 
     return (
-        <section className="px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
-            {/* Antes limitado a max-w-6xl (1152px), o que deixava metade das
-                telas grandes vazia. Agora ocupa a largura disponivel com uma
-                margem generosa, e o teto so entra em monitores muito largos. */}
-            <div className="mx-auto w-full max-w-[1800px]">
+        <section className="py-4 sm:py-6">
+            {/* Sem teto de largura: a imagem e a faixa sangram de borda a borda.
+                O recuo nao vive aqui, e sim nos blocos de texto — encostar
+                tipografia na borda da tela deixa a pagina com cara de inacabada,
+                mas a imagem ganha em ocupar tudo. */}
+            <div className="w-full">
                 <div className="relative">
                     {/* Cabeçalho flutuante sobre a imagem. */}
-                    <div className="absolute -top-3 z-10 flex w-[85%] items-center justify-between sm:-top-2 md:top-0 lg:top-4">
+                    <div className="absolute -top-3 left-4 z-10 flex w-[85%] items-center justify-between sm:-top-2 sm:left-8 md:top-0 lg:top-4 lg:left-12">
                         <div className="flex items-center gap-2 text-xl">
                             <span className="animate-spin text-japao-vermelho" aria-hidden="true">
                                 ✱
@@ -99,7 +100,7 @@ export default function QuemSomos() {
                     </TimelineContent>
 
                     {/* Números */}
-                    <div className="flex flex-wrap items-center justify-between py-3 text-sm lg:justify-start">
+                    <div className="flex flex-wrap items-center justify-between px-4 py-3 text-sm sm:px-8 lg:justify-start lg:px-12">
                         <TimelineContent
                             as="div"
                             animationNum={2}
@@ -117,7 +118,7 @@ export default function QuemSomos() {
                             </div>
                         </TimelineContent>
 
-                        <div className="right-0 bottom-16 flex flex-row-reverse gap-4 lg:absolute lg:flex-col lg:gap-0">
+                        <div className="bottom-16 flex flex-row-reverse gap-4 lg:absolute lg:right-12 lg:flex-col lg:gap-0">
                             <TimelineContent
                                 as="div"
                                 animationNum={3}
@@ -164,7 +165,7 @@ export default function QuemSomos() {
                 </div>
 
                 {/* Conteúdo */}
-                <div className="grid gap-8 pt-12 md:grid-cols-3 xl:gap-14 xl:pt-16">
+                <div className="grid gap-8 px-4 pt-12 sm:px-8 md:grid-cols-3 lg:px-12 xl:gap-14 xl:pt-16">
                     <div className="md:col-span-2">
                         <h1 className="mb-8 text-2xl leading-[110%] font-semibold tracking-tight sm:text-4xl md:text-5xl xl:text-6xl">
                             <VerticalCutReveal
