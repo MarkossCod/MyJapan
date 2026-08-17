@@ -107,6 +107,57 @@
         height: 0;
         display: none;
       }
+
+      /* ---------------------------------------------------------------------
+         Título do hero mais largo.
+
+         O CSS do bundle (assets/index-*.css) é minificado e gerado por build,
+         então os ajustes ficam aqui: esta folha vem depois do <link>, logo
+         ganha na cascata sem precisar editar o arquivo compilado.
+      --------------------------------------------------------------------- */
+
+      /* A coluna de texto era 0.76fr contra 1.24fr do palco 3D, o que deixava
+         o título comprimido num bloco estreito. Agora as duas colunas ficam
+         quase iguais, sem apertar a bandeira. */
+      .hero {
+        grid-template-columns: minmax(20rem, 0.92fr) minmax(27rem, 1.08fr);
+      }
+
+      .copy {
+        max-width: 56rem;
+        /* O recuo original chegava a 7.5rem e roubava largura justamente de
+           onde o título precisa crescer. */
+        padding-left: clamp(1.75rem, 4.6vw, 5rem);
+        padding-right: 1.5rem;
+        /* Sem isso o tamanho mínimo do conteúdo do título empurraria a coluna
+           para além da proporção definida no grid. */
+        min-width: 0;
+      }
+
+      /* O `max-width: 9.5ch` original cortava o título em três linhas
+         ("Conheça" / "mais" / "o Japão."). Liberando a largura, a quebra
+         volta a ser só a do <br>: duas linhas largas e alinhadas. */
+      #hero-title {
+        max-width: none;
+        font-size: clamp(3.5rem, 7.2vw, 8.8rem);
+        /* 0.79 do original encostava a cedilha de "Conheça" no "Japão" agora
+           que o corpo do texto é maior. */
+        line-height: 0.9;
+        letter-spacing: -0.05em;
+      }
+
+      @media (max-width: 800px) {
+        .copy {
+          max-width: none;
+          padding-left: 1.35rem;
+          padding-right: 1.35rem;
+        }
+
+        #hero-title {
+          font-size: clamp(3.6rem, 17vw, 6rem);
+          line-height: 0.88;
+        }
+      }
     </style>
   </head>
   <body>
@@ -115,9 +166,6 @@
         <p class="eyebrow">日本 · JAPÃO</p>
         <h1 id="hero-title">Conheça mais<br />o <em>Japão.</em></h1>
         <p class="lede">Entre templos silenciosos, cidades vibrantes e paisagens que mudam a cada estação, há sempre um novo Japão para descobrir.</p>
-        <a class="cta" href="https://www.japan.travel/pt/br/" target="_blank" rel="noreferrer">
-          <span>Saiba mais</span><span aria-hidden="true">↗</span>
-        </a>
       </section>
 
       <section class="stage" aria-label="Bandeira 3D interativa do Japão">
@@ -135,7 +183,6 @@
         </button>
       </section>
 
-      <p class="scroll-note" aria-hidden="true">Explore em 360°</p>
       <div class="sun-mark" aria-hidden="true"></div>
     </main>
   </body>

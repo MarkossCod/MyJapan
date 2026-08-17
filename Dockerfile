@@ -34,13 +34,40 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
+# O GitHub limita downloads anônimos e responde 429/504 em horário de pico,
+# o que derrubava o build. Menos conexões simultâneas reduzem a chance de
+# levar rate limit.
+ENV COMPOSER_MAX_PARALLEL_HTTP=6
+
+# Só os manifestos primeiro: enquanto as dependências não mudarem, o Docker
+# reaproveita esta camada e o deploy não baixa nada do GitHub.
+COPY composer.json composer.lock ./
+
+# --prefer-install=auto sobrescreve o `preferred-install: dist` do
+# composer.json e libera o fallback para clone via git quando o zip falha
+# (era o "Source fallback is disabled" do erro).
+#
+# --no-scripts/--no-autoloader porque o código da aplicação ainda não foi
+# copiado; o autoload sai no passo seguinte.
+#
+# O laço tenta de novo, com espera crescente, antes de derrubar o build.
+RUN for i in 1 2 3 4 5; do \
+        composer install \
+            --no-dev \
+            --no-scripts \
+            --no-autoloader \
+            --no-interaction \
+            --prefer-install=auto \
+        && exit 0; \
+        echo ">> tentativa $i falhou (provavel rate limit do GitHub); aguardando $((i * 20))s"; \
+        sleep $((i * 20)); \
+    done; \
+    echo ">> composer install falhou depois de 5 tentativas"; \
+    exit 1
+
 COPY . .
 
-RUN composer install \
-    --no-dev \
-    --optimize-autoloader \
-    --no-interaction \
-    --prefer-dist
+RUN composer dump-autoload --no-dev --optimize --no-interaction
 
 # ---------------------------------------------------------------------------
 # 3. Runtime: nginx + php-fpm

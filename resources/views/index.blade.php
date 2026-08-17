@@ -20,22 +20,36 @@
          texto e criaria rolagem horizontal no celular sem esse recorte. --}}
     <section id="por-que-japao" class="overflow-hidden px-6 py-24 sm:py-32" aria-labelledby="por-que-japao-titulo">
         <div class="mx-auto max-w-4xl">
-            <p class="text-xs tracking-[0.3em] text-black/50 uppercase">Por que ir</p>
-            <h2 id="por-que-japao-titulo" class="sr-only">Por que conhecer o Japão</h2>
+            {{-- Kicker no mesmo padrão do rodapé e do hero 3D: kanji + rótulo
+                 curto em vermelho, precedido de uma régua fina. --}}
+            <p class="flex items-center gap-4 text-[0.7rem] font-semibold tracking-[0.34em] text-japao-vermelho uppercase">
+                <span class="h-px w-10 shrink-0 bg-japao-vermelho/50" aria-hidden="true"></span>
+                <span><span aria-hidden="true">理由 · </span>Por que ir</span>
+            </p>
+
+            {{-- Antes este título era sr-only e a seção abria direto no
+                 parágrafo. Agora ele aparece e ancora a seção visualmente. --}}
+            <h2 id="por-que-japao-titulo" class="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl">
+                Duas eras vivendo<br class="hidden sm:block">
+                <span class="text-japao-vermelho">no mesmo país</span>
+            </h2>
 
             {{-- Ilha React: o texto é revelado palavra a palavra conforme a rolagem. --}}
-            <div data-react="motivos-japao" class="mt-6"></div>
+            <div data-react="motivos-japao" class="mt-10"></div>
         </div>
     </section>
 
     {{-- 3. Galeria de destinos (efeito hover expand / carrossel no celular). --}}
     <section id="destinos" class="px-0 py-20 sm:py-24" aria-labelledby="destinos-titulo">
         <div class="mx-auto mb-10 max-w-6xl px-6">
-            <p class="text-xs tracking-[0.3em] text-black/50 uppercase">Destinos</p>
-            <h2 id="destinos-titulo" class="mt-2 text-3xl font-semibold sm:text-4xl">
-                Seis lugares para começar
+            <p class="flex items-center gap-4 text-[0.7rem] font-semibold tracking-[0.34em] text-japao-vermelho uppercase">
+                <span class="h-px w-10 shrink-0 bg-japao-vermelho/50" aria-hidden="true"></span>
+                <span><span aria-hidden="true">目的地 · </span>Destinos</span>
+            </p>
+            <h2 id="destinos-titulo" class="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl">
+                Seis lugares para <span class="text-japao-vermelho">começar</span>
             </h2>
-            <p class="mt-3 max-w-2xl text-black/60">
+            <p class="mt-5 max-w-2xl text-black/60">
                 Passe o mouse ou toque em cada imagem para explorar. De castelos cercados de cerejeiras ao neon de
                 Tóquio, cada destino conta uma parte diferente da história japonesa.
             </p>
