@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import CurvedMenu from '@/components/ui/curved-menu';
 import GaleriaDestinos from '@/components/GaleriaDestinos';
 import MotivosJapao from '@/components/MotivosJapao';
+import QuemSomos from '@/components/QuemSomos';
 import TituloRevelado from '@/components/TituloRevelado';
 import { pausarHero3DForaDaTela } from '@/hero3d';
 
@@ -20,6 +21,7 @@ const COMPONENTES = {
     'curved-menu': CurvedMenu,
     'galeria-destinos': GaleriaDestinos,
     'motivos-japao': MotivosJapao,
+    'quem-somos': QuemSomos,
     'titulo-revelado': TituloRevelado,
 };
 

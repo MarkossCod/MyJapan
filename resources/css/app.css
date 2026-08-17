@@ -54,6 +54,39 @@ body {
     }
 }
 
+/* ---------------------------------------------------------------------------
+   Faixa deslizante (componente Marquee).
+
+   O componente renderiza o conteúdo duas vezes; deslocar a trilha em -50% faz
+   a segunda cópia ocupar exatamente a posição da primeira no fim do ciclo, e o
+   retorno ao início não é percebido.
+--------------------------------------------------------------------------- */
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee var(--duration, 30s) linear infinite;
+}
+
+.animate-marquee-reverse {
+    animation-direction: reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Movimento contínuo e infinito é justamente o tipo de coisa que incomoda
+       quem pede menos animação. */
+    .animate-marquee {
+        animation: none;
+    }
+}
+
 /* Bloco de integração da experiência 3D (public/japao-3d). */
 .japao-3d-embed {
     width: 100%;
