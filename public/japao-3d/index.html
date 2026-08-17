@@ -120,7 +120,10 @@
          o título comprimido num bloco estreito. Agora as duas colunas ficam
          quase iguais, sem apertar a bandeira. */
       .hero {
-        grid-template-columns: minmax(20rem, 0.92fr) minmax(27rem, 1.08fr);
+        /* 0.92fr deixava ~770px úteis para o título, e "Conheça mais" precisa
+           de ~790px na fonte máxima — faltava pouco, e a linha quebrava em
+           três. Com 1.02fr sobra folga sem apertar a bandeira. */
+        grid-template-columns: minmax(20rem, 1.02fr) minmax(25rem, 0.98fr);
       }
 
       .copy {

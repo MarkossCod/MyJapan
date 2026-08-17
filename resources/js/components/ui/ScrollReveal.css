@@ -1,5 +1,8 @@
 .scroll-reveal {
-    margin: 20px 0;
+    /* margin-block em vez do atalho `margin: 20px 0`: o atalho zerava as
+       margens laterais e anulava o `mx-auto` passado via containerClassName,
+       deixando o texto encostado à esquerda em seções centralizadas. */
+    margin-block: 20px;
 }
 
 .scroll-reveal-text {
