@@ -54,6 +54,7 @@ RUN apk add --no-cache nginx supervisor gettext
 RUN docker-php-ext-install opcache
 
 COPY docker/php.ini /usr/local/etc/php/conf.d/99-myjapan.ini
+COPY docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-myjapan.conf
 COPY docker/nginx.conf.template /etc/nginx/nginx.conf.template
 COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -66,6 +67,22 @@ COPY --from=assets /app/public/build /var/www/html/public/build
 
 RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
+
+# Padrões de produção embutidos na imagem.
+#
+# Sem eles, o Laravel cai nos defaults do config/*.php — que são
+# SESSION_DRIVER=database e CACHE_STORE=database — e tenta abrir um banco que
+# não existe no Render, devolvendo 500 em toda requisição. Qualquer variável
+# definida no painel do Render sobrescreve o que está aqui.
+ENV APP_ENV=production \
+    APP_DEBUG=false \
+    LOG_CHANNEL=stderr \
+    LOG_LEVEL=error \
+    SESSION_DRIVER=cookie \
+    CACHE_STORE=file \
+    QUEUE_CONNECTION=sync \
+    FILESYSTEM_DISK=local \
+    DB_CONNECTION=sqlite
 
 # Informativo: o Render define a porta real via variável PORT.
 EXPOSE 10000
