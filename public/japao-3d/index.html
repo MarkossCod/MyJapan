@@ -142,11 +142,25 @@
          volta a ser só a do <br>: duas linhas largas e alinhadas. */
       #hero-title {
         max-width: none;
-        font-size: clamp(3.5rem, 7.2vw, 8.8rem);
+        /* Os valores vêm de medição, não de chute: a maior linha ("Conheça
+           mais") ocupa ~5.03em de largura, e a coluna útil é ~46% da janela
+           menos os recuos. 8vw / 9rem deixa a linha em ~92% da coluna — o
+           máximo que cresce sem arriscar uma terceira linha. */
+        font-size: clamp(3.6rem, 8vw, 9rem);
         /* 0.79 do original encostava a cedilha de "Conheça" no "Japão" agora
            que o corpo do texto é maior. */
-        line-height: 0.9;
-        letter-spacing: -0.05em;
+        line-height: 0.88;
+        /* Um pouco mais fechado que os -0.045em originais: no corpo grande, o
+           espaçamento normal faz o título parecer solto em vez de compacto. */
+        letter-spacing: -0.055em;
+      }
+
+      /* O título só "pesa" se o resto recuar. Mais respiro abaixo dele e um
+         apoio menor deixam a hierarquia óbvia sem precisar de mais enfeite. */
+      .lede {
+        margin-top: 2.8rem;
+        max-width: 29rem;
+        font-size: clamp(0.92rem, 1vw, 1.02rem);
       }
 
       @media (max-width: 800px) {

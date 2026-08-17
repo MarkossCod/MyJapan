@@ -57,9 +57,25 @@ http {
         }
 
         # Bundle estático da experiência 3D.
-        location /japao-3d/ {
+        #
+        # Precisa de dois blocos. A regra antiga cobria a pasta inteira com
+        # `expires 7d`, e isso incluía o index.html — que, diferente dos
+        # arquivos de assets/, não tem hash no nome. Resultado: depois da
+        # primeira visita, o navegador servia o hero antigo por uma semana e
+        # nenhuma alteração no HTML aparecia, mesmo com o deploy correto.
+        #
+        # O nginx escolhe o prefixo mais longo, então assets/ vence sobre a
+        # regra geral abaixo.
+        location /japao-3d/assets/ {
             expires 7d;
-            add_header Cache-Control "public";
+            add_header Cache-Control "public, immutable";
+            try_files $uri =404;
+        }
+
+        # O HTML de entrada revalida sempre. Com o ETag, quando nada mudou a
+        # resposta é um 304 vazio — barato, e nunca congela.
+        location /japao-3d/ {
+            add_header Cache-Control "no-cache";
             try_files $uri $uri/ =404;
         }
 
