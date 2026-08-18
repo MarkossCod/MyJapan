@@ -168,8 +168,8 @@ export default function QuemSomos() {
                 </div>
 
                 {/* Conteúdo */}
-                <div className="grid gap-8 px-4 pt-12 pb-20 sm:px-8 md:grid-cols-3 lg:px-12 xl:gap-14 xl:pt-16 xl:pb-28">
-                    <div className="md:col-span-2">
+                <div className="grid gap-8 px-4 pt-12 pb-20 sm:px-8 lg:grid-cols-3 lg:px-12 xl:gap-14 xl:pt-16 xl:pb-28">
+                    <div className="lg:col-span-2">
                         <h1 className="mb-8 text-2xl leading-[110%] font-semibold tracking-tight sm:text-4xl md:text-5xl">
                             <VerticalCutReveal
                                 splitBy="words"
@@ -205,37 +205,49 @@ export default function QuemSomos() {
                         </TimelineContent>
                     </div>
 
-                    <div className="md:col-span-1">
-                        <div className="text-right">
-                            <TimelineContent
-                                as="div"
-                                animationNum={6}
-                                customVariants={variantesRevelar}
-                                className="mb-2 text-xl font-bold text-japao-vermelho"
-                            >
-                                MYJAPAN
-                            </TimelineContent>
-                            <TimelineContent
-                                as="div"
-                                animationNum={7}
-                                customVariants={variantesRevelar}
-                                className="mb-8 text-xs text-black/60"
-                            >
-                                Projeto acadêmico · SENAI
-                            </TimelineContent>
+                    {/* Cartao lateral: um unico ritmo vertical (gap) no lugar das
+                        margens avulsas, tudo centrado na largura da coluna. */}
+                    <div className="lg:col-span-1 lg:justify-self-center">
+                        <div className="flex h-full flex-col items-center justify-center gap-5 text-center">
+                            <div>
+                                <TimelineContent
+                                    as="div"
+                                    animationNum={6}
+                                    customVariants={variantesRevelar}
+                                    className="text-xl font-bold tracking-[0.12em] text-japao-vermelho"
+                                >
+                                    MYJAPAN
+                                </TimelineContent>
+                                <TimelineContent
+                                    as="div"
+                                    animationNum={7}
+                                    customVariants={variantesRevelar}
+                                    className="mt-1 text-xs text-black/60"
+                                >
+                                    Projeto acadêmico · SENAI
+                                </TimelineContent>
+                            </div>
+
                             <TimelineContent
                                 as="div"
                                 animationNum={8}
                                 customVariants={variantesRevelar}
-                                className="mb-6"
+                                className="h-px w-12 bg-black/15"
+                            />
+
+                            <TimelineContent
+                                as="p"
+                                animationNum={8}
+                                customVariants={variantesRevelar}
+                                className="max-w-[22ch] text-sm leading-relaxed font-medium text-balance"
                             >
-                                <p className="mb-4 text-sm font-medium">Quer saber quem está por trás do projeto?</p>
+                                Quer saber quem está por trás do projeto?
                             </TimelineContent>
+
                             <TimelineContent
                                 as="div"
                                 animationNum={9}
                                 customVariants={variantesRevelar}
-                                className="flex justify-end"
                             >
                                 <BotaoSeta cor="#bc002d" onClick={() => setModalAberto(true)}>
                                     CONHEÇA O DESENVOLVEDOR
