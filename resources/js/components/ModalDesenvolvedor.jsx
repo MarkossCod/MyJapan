@@ -71,7 +71,7 @@ export default function ModalDesenvolvedor({ aberto, aoFechar }) {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.25 }}
                     onClick={aoFechar}
-                    className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+                    className="fixed inset-0 z-[60] flex items-center justify-center bg-japao-tinta/45 p-4 backdrop-blur-md"
                 >
                     <motion.div
                         role="dialog"
