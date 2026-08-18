@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ModalContato from '@/components/ModalContato';
+import ModalDesenvolvedor from '@/components/ModalDesenvolvedor';
 import BotaoSeta from '@/components/ui/botao-seta';
 import { LogoLaravel, LogoReact, LogoTailwind, LogoThree, LogoVite, PlacaInstituicao } from '@/components/ui/logos';
 import Marquee from '@/components/ui/marquee';
@@ -45,7 +45,7 @@ export default function QuemSomos() {
     const [modalAberto, setModalAberto] = useState(false);
 
     return (
-        <section className="py-4 sm:py-6">
+        <section className="py-2 sm:py-3">
             {/* Sem teto de largura: a imagem e a faixa sangram de borda a borda.
                 O recuo nao vive aqui, e sim nos blocos de texto — encostar
                 tipografia na borda da tela deixa a pagina com cara de inacabada,
@@ -53,7 +53,10 @@ export default function QuemSomos() {
             <div className="w-full">
                 <div className="relative">
                     {/* Cabeçalho flutuante sobre a imagem. */}
-                    <div className="absolute -top-3 left-4 z-10 flex w-[85%] items-center justify-between sm:-top-2 sm:left-8 md:top-0 lg:top-4 lg:left-12">
+                    {/* Deslocado para a direita de proposito: o botao do menu e fixo
+                        no canto superior esquerdo (48px + margem), e sem esse desvio
+                        o kicker nao poderia subir sem passar por baixo dele. */}
+                    <div className="absolute -top-1 left-20 z-10 flex w-[80%] items-center justify-between sm:left-24 lg:top-1 lg:left-28">
                         <div className="flex items-center gap-2 text-xl">
                             <span className="animate-spin text-japao-vermelho" aria-hidden="true">
                                 ✱
@@ -226,7 +229,7 @@ export default function QuemSomos() {
                                 customVariants={variantesRevelar}
                                 className="mb-6"
                             >
-                                <p className="mb-4 text-sm font-medium">Pronto para escolher a sua primeira parada?</p>
+                                <p className="mb-4 text-sm font-medium">Quer saber quem está por trás do projeto?</p>
                             </TimelineContent>
                             <TimelineContent
                                 as="div"
@@ -235,7 +238,7 @@ export default function QuemSomos() {
                                 className="flex justify-end"
                             >
                                 <BotaoSeta cor="#bc002d" onClick={() => setModalAberto(true)}>
-                                    FALE COM A GENTE
+                                    CONHEÇA O DESENVOLVEDOR
                                 </BotaoSeta>
                             </TimelineContent>
                         </div>
@@ -243,7 +246,7 @@ export default function QuemSomos() {
                 </div>
             </div>
 
-            <ModalContato aberto={modalAberto} aoFechar={() => setModalAberto(false)} />
+            <ModalDesenvolvedor aberto={modalAberto} aoFechar={() => setModalAberto(false)} />
         </section>
     );
 }

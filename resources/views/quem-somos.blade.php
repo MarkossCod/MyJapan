@@ -7,8 +7,8 @@
 
     {{-- A seção inteira é uma ilha React: ela depende de animações de entrada e
          de um pop-up com estado, que não têm equivalente em Blade puro.
-         O recuo no topo é o mínimo para não passar por baixo do botão do
-         menu, que é fixo (48px + 16px de margem). --}}
-    <div data-react="quem-somos" class="pt-16 sm:pt-20"></div>
+         O recuo no topo é curto porque o kicker foi deslocado para a direita
+         e não disputa mais espaço com o botão fixo do menu. --}}
+    <div data-react="quem-somos" class="pt-6 sm:pt-8"></div>
 
 @endsection
