@@ -76,7 +76,7 @@ export default function QuemSomos() {
                         as="figure"
                         animationNum={1}
                         customVariants={variantesEscala}
-                        className="group relative"
+                        className="group relative px-4 sm:px-8 lg:px-12"
                     >
                         {/* 100x30 e a mesma proporcao do senai.svg (1000x300). Manter
                             as duas iguais e o que garante que a forma fique preenchida:
