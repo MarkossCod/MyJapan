@@ -168,7 +168,7 @@ export default function QuemSomos() {
                 </div>
 
                 {/* Conteúdo */}
-                <div className="grid gap-8 px-4 pt-12 sm:px-8 md:grid-cols-3 lg:px-12 xl:gap-14 xl:pt-16">
+                <div className="grid gap-8 px-4 pt-12 pb-20 sm:px-8 md:grid-cols-3 lg:px-12 xl:gap-14 xl:pt-16 xl:pb-28">
                     <div className="md:col-span-2">
                         <h1 className="mb-8 text-2xl leading-[110%] font-semibold tracking-tight sm:text-4xl md:text-5xl">
                             <VerticalCutReveal
@@ -178,7 +178,7 @@ export default function QuemSomos() {
                                 reverse={true}
                                 transition={{ type: 'spring', stiffness: 250, damping: 30, delay: 0.2 }}
                             >
-                                Encurtar a distância entre você e o Japão.
+                                Encurtar a distância entre você e o Japão
                             </VerticalCutReveal>
                         </h1>
 
