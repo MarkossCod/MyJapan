@@ -3,22 +3,26 @@
     Reconstrução vetorial da placa do SENAI usada na página "Quem somos".
 
     Por que redesenhar em vez de usar o PNG: a arte entra dentro de um recorte
-    SVG com `preserveAspectRatio="slice"`, que corta as bordas para preencher a
-    forma. O logo original é muito largo (proporção ~6:1) e seria decapitado nas
-    laterais. Aqui a arte foi montada num quadro 1000x400 (2.5:1, a mesma
-    proporção do recorte), com a placa centralizada e margem sobrando — assim o
-    `slice` preenche sem cortar nada.
+    SVG e precisa preencher a forma sem ser decapitada — o logo original é muito
+    largo (proporção ~6:1) e perderia as laterais.
+
+    O quadro é 1000x300 de propósito: exatamente a proporção da caixa que o
+    recorte usa na página (viewBox 100x30). Com as duas iguais, `meet` e `slice`
+    dão no mesmo e o preenchimento é exato. Isso importa porque, para uma imagem
+    que aponta para outro SVG, quem decide o encaixe é o `preserveAspectRatio`
+    do arquivo referenciado — não o do <image> que o chama. Foi assim que a
+    forma acabou aparecendo com margens em vez de preenchida.
 
     As medidas seguem o original: bloco das marcas à esquerda, faixa central com
     as barras verticais e a palavra SENAI, bandeira do Japão à direita.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400" role="img" aria-label="SENAI — FIEPE, CIEPE, SESI, SENAI, IEL — e a bandeira do Japão">
-    <rect width="1000" height="400" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300" role="img" aria-label="SENAI — FIEPE, CIEPE, SESI, SENAI, IEL — e a bandeira do Japão">
+    <rect width="1000" height="300" fill="#ffffff"/>
 
     <!-- Não mexa no x=80 sem conferir o recorte: o clip-path da seção tem um
          degrau na lateral esquerda, e a placa mais à esquerda que isso entra
          na área cortada. -->
-    <g transform="translate(80 145)">
+    <g transform="translate(80 95)">
         <!-- Bloco das cinco marcas do sistema. -->
         <rect x="0" y="0" width="118" height="110" fill="#c8102e"/>
         <g fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-style="italic" font-size="15.5" text-anchor="middle">

@@ -17,7 +17,7 @@ function Marca({ children, viewBox = '0 0 24 24', titulo }) {
     return (
         <svg
             viewBox={viewBox}
-            className="h-7 w-7 shrink-0"
+            className="h-6 w-6 shrink-0"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
             role="img"
@@ -94,7 +94,7 @@ export function LogoThree() {
  */
 export function PlacaInstituicao({ nome }) {
     return (
-        <span className="flex shrink-0 items-center rounded-[3px] bg-japao-vermelho px-3 py-1.5 text-sm font-bold tracking-wide text-white italic sm:text-base">
+        <span className="flex shrink-0 items-center rounded-[3px] bg-japao-vermelho px-2.5 py-1 text-xs font-bold tracking-wide text-white italic sm:text-sm">
             {nome}
         </span>
     );
