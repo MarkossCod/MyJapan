@@ -1,13 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Github, Instagram, Linkedin, Mail, X, Youtube } from 'lucide-react';
+import { Github, Linkedin, Mail, X } from 'lucide-react';
 
 /*
-    Troque por uma foto sua: coloque o arquivo em public/images/ e aponte aqui,
-    por exemplo '/images/desenvolvedor.jpg'. Enquanto for null, o painel mostra
-    um monograma no lugar — melhor do que uma imagem quebrada.
+    Salve a foto em public/images/desenvolvedor.jpg. Se o arquivo não existir,
+    o painel cai no monograma automaticamente (onError abaixo) — assim a página
+    nunca mostra um ícone de imagem quebrada.
 */
-const FOTO = null;
+const FOTO = '/images/desenvolvedor.jpg';
 
 const DEV = {
     nome: 'Marko',
@@ -18,9 +18,8 @@ const DEV = {
         'sem esconder nada atrás de jargão.',
     redes: [
         { href: 'https://github.com/MarkossCod', rotulo: 'GitHub', Icone: Github },
-        { href: 'https://www.instagram.com/', rotulo: 'Instagram', Icone: Instagram },
-        { href: 'https://www.youtube.com/', rotulo: 'YouTube', Icone: Youtube },
         { href: 'https://www.linkedin.com/', rotulo: 'LinkedIn', Icone: Linkedin },
+        { href: 'mailto:contato@myjapan.com.br', rotulo: 'E-mail', Icone: Mail },
     ],
 };
 
@@ -31,13 +30,15 @@ const DEV = {
  * único momento em que a página fala de quem a fez, e a inversão de tom marca
  * essa troca de voz.
  *
- * Estrutura: retrato à esquerda e painel de texto à direita, sobrepondo o
- * retrato alguns pixels (o `-ml` no md) — é esse encaixe que dá a sensação de
- * profundidade da referência, e não uma sombra qualquer.
+ * A foto ocupa o cartão inteiro e o painel de texto flutua sobre ela, encostado
+ * à direita. É o gesto da referência — e, como não existe fundo exposto atrás do
+ * painel, também resolve a área escura vazia que sobrava na versão em duas
+ * colunas: cada pixel do cartão é foto ou painel.
  */
 export default function ModalDesenvolvedor({ aberto, aoFechar }) {
     const botaoFecharRef = useRef(null);
     const focoAnteriorRef = useRef(null);
+    const [semFoto, setSemFoto] = useState(false);
 
     useEffect(() => {
         if (!aberto) return;
@@ -81,45 +82,50 @@ export default function ModalDesenvolvedor({ aberto, aoFechar }) {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 16, scale: 0.98 }}
                         transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
-                        className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-[#0c0c0e] p-3 shadow-2xl sm:p-4"
+                        className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-[#1b1b1f] shadow-2xl"
                     >
                         <button
                             ref={botaoFecharRef}
                             type="button"
                             onClick={aoFechar}
                             aria-label="Fechar"
-                            className="absolute top-5 right-5 z-20 rounded-lg p-2 text-white/50 transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
+                            className="absolute top-4 right-4 z-30 grid h-9 w-9 place-items-center rounded-full bg-black/40 text-white/75 backdrop-blur-sm transition-colors hover:bg-black/70 hover:text-white focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none"
                         >
-                            <X size={18} />
+                            <X size={17} />
                         </button>
 
-                        <div className="flex flex-col md:flex-row md:items-stretch">
-                            {/* Retrato */}
-                            <div className="w-full shrink-0 overflow-hidden rounded-2xl md:min-h-[420px] md:w-[44%]">
-                                {FOTO ? (
+                        <div className="flex flex-col md:min-h-[26rem] md:flex-row">
+                            {/* Coluna da foto.
+                                Ela e mais larga do que a parte visivel: o painel cobre
+                                os ultimos 14%. Enquadrar assim, e nao usar a foto como
+                                fundo do cartao inteiro, e o que mantem o rosto a mostra
+                                — centralizado nesta coluna, ele cai na faixa livre em
+                                vez de ficar atras do painel. */}
+                            <div className="relative h-64 w-full shrink-0 md:h-auto md:w-[52%]">
+                                {FOTO && !semFoto ? (
                                     <img
                                         src={FOTO}
                                         alt={`Retrato de ${DEV.nome}`}
-                                        className="h-56 w-full object-cover object-center md:h-full"
+                                        onError={() => setSemFoto(true)}
+                                        className="absolute inset-0 h-full w-full object-cover object-[50%_22%]"
                                     />
                                 ) : (
                                     <div
-                                        className="flex h-56 w-full items-center justify-center bg-gradient-to-br from-[#d8b48c] to-[#a97f57] md:h-full"
+                                        className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#d8b48c] to-[#a97f57]"
                                         aria-hidden="true"
                                     >
-                                        <span className="text-6xl font-semibold text-white/90">
+                                        <span className="text-7xl font-semibold text-white/90">
                                             {DEV.nome.charAt(0)}
                                         </span>
                                     </div>
                                 )}
                             </div>
 
-                            {/* Painel de texto, sobrepondo o retrato no desktop. */}
-                            {/* A sombra nao e enfeite: sem ela a borda do painel some contra a
-                                foto e a sobreposicao — que e o gesto da referencia —
-                                deixa de ser percebida. O recuo vertical faz o retrato
-                                sobrar acima e abaixo, completando a profundidade. */}
-                            <div className="relative z-10 -mt-6 rounded-2xl bg-[#1e1e22] p-6 shadow-2xl shadow-black/60 sm:p-8 md:my-10 md:-mt-0 md:-ml-16 md:self-center">
+                            {/* Painel sobre a foto: sobe por cima no celular (-mt-6) e
+                                avanca por cima pela lateral no desktop (-ml). Vai ate a
+                                borda do cartao de proposito — assim nao sobra fundo
+                                exposto em canto nenhum. */}
+                            <div className="relative z-20 -mt-6 flex flex-1 flex-col justify-center rounded-t-3xl bg-[#1b1b1f] p-6 shadow-2xl shadow-black/60 sm:p-8 md:-mt-0 md:-ml-[7%] md:rounded-t-none md:rounded-l-3xl md:p-9">
                                 <h2 id="titulo-desenvolvedor" className="text-2xl font-bold text-white">
                                     {DEV.nome}
                                 </h2>
@@ -132,21 +138,15 @@ export default function ModalDesenvolvedor({ aberto, aoFechar }) {
                                         <a
                                             key={rotulo}
                                             href={href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
+                                            {...(href.startsWith('http')
+                                                ? { target: '_blank', rel: 'noopener noreferrer' }
+                                                : {})}
                                             aria-label={rotulo}
-                                            className="grid h-11 w-11 place-items-center rounded-full bg-white text-[#0c0c0e] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1b1b1f] focus-visible:outline-none"
+                                            className="grid h-11 w-11 place-items-center rounded-full bg-white text-[#1b1b1f] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1b1b1f] focus-visible:outline-none"
                                         >
                                             <Icone size={18} />
                                         </a>
                                     ))}
-                                    <a
-                                        href="mailto:contato@myjapan.com.br"
-                                        aria-label="E-mail"
-                                        className="grid h-11 w-11 place-items-center rounded-full bg-white text-[#0c0c0e] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1b1b1f] focus-visible:outline-none"
-                                    >
-                                        <Mail size={18} />
-                                    </a>
                                 </div>
                             </div>
                         </div>
