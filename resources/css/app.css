@@ -412,9 +412,3 @@ body {
         animation: none;
     }
 }
-
-/* Variante escura do botão pílula: fundo sumi em repouso, vermelho no hover
-   (a regra base faz o contrário e o hover ficaria invisível). */
-.btn-seta--escuro:hover {
-    background-color: var(--color-japao-vermelho);
-}

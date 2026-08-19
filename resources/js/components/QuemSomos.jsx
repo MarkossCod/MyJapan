@@ -205,9 +205,8 @@ export default function QuemSomos() {
                         </TimelineContent>
                     </div>
 
-                    {/* Cartao lateral: alinhado a direita e separado por um
-                        filete vertical, como uma assinatura do projeto. */}
-                    <div className="lg:col-span-1 lg:border-l lg:border-black/10 lg:pl-10">
+                    {/* Cartao lateral: assinatura do projeto, alinhada a direita. */}
+                    <div className="lg:col-span-1">
                         <div className="flex h-full flex-col items-end justify-center gap-6 text-right">
                             <div>
                                 <TimelineContent
@@ -232,7 +231,7 @@ export default function QuemSomos() {
                                 as="p"
                                 animationNum={8}
                                 customVariants={variantesRevelar}
-                                className="max-w-[26ch] text-sm leading-relaxed font-semibold text-balance"
+                                className="text-sm leading-relaxed font-semibold lg:whitespace-nowrap"
                             >
                                 Quer saber quem está por trás do projeto?
                             </TimelineContent>
@@ -243,8 +242,8 @@ export default function QuemSomos() {
                                 customVariants={variantesRevelar}
                             >
                                 <BotaoSeta
-                                    cor="#1c1b19"
-                                    className="btn-seta--escuro shadow-lg shadow-black/20"
+                                    cor="#bc002d"
+                                    className="shadow-lg shadow-black/20"
                                     onClick={() => setModalAberto(true)}
                                 >
                                     CONHEÇA O DESENVOLVEDOR
