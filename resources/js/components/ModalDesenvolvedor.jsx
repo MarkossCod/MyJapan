@@ -10,7 +10,7 @@ import { Github, Linkedin, Mail, X } from 'lucide-react';
 const FOTO = '/images/desenvolvedor.jpg';
 
 const DEV = {
-    nome: 'Marko',
+    nome: 'Markos Samuell',
     papel: 'Desenvolvedor · Projeto MyJapan, SENAI',
     texto:
         'Construí o MyJapan do zero como projeto acadêmico: da experiência 3D da bandeira ao deploy em container. ' +
@@ -18,7 +18,7 @@ const DEV = {
         'sem esconder nada atrás de jargão.',
     redes: [
         { href: 'https://github.com/MarkossCod', rotulo: 'GitHub', Icone: Github },
-        { href: 'https://www.linkedin.com/', rotulo: 'LinkedIn', Icone: Linkedin },
+        { href: 'https://www.linkedin.com/in/markos-samuell/', rotulo: 'LinkedIn', Icone: Linkedin },
         { href: 'mailto:contato@myjapan.com.br', rotulo: 'E-mail', Icone: Mail },
     ],
 };
