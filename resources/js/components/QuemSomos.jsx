@@ -205,10 +205,10 @@ export default function QuemSomos() {
                         </TimelineContent>
                     </div>
 
-                    {/* Cartao lateral: um unico ritmo vertical (gap) no lugar das
-                        margens avulsas, tudo centrado na largura da coluna. */}
-                    <div className="lg:col-span-1 lg:justify-self-center">
-                        <div className="flex h-full flex-col items-center justify-center gap-5 text-center">
+                    {/* Cartao lateral: alinhado a direita e separado por um
+                        filete vertical, como uma assinatura do projeto. */}
+                    <div className="lg:col-span-1 lg:border-l lg:border-black/10 lg:pl-10">
+                        <div className="flex h-full flex-col items-end justify-center gap-6 text-right">
                             <div>
                                 <TimelineContent
                                     as="div"
@@ -229,17 +229,10 @@ export default function QuemSomos() {
                             </div>
 
                             <TimelineContent
-                                as="div"
-                                animationNum={8}
-                                customVariants={variantesRevelar}
-                                className="h-px w-12 bg-black/15"
-                            />
-
-                            <TimelineContent
                                 as="p"
                                 animationNum={8}
                                 customVariants={variantesRevelar}
-                                className="max-w-[22ch] text-sm leading-relaxed font-medium text-balance"
+                                className="max-w-[26ch] text-sm leading-relaxed font-semibold text-balance"
                             >
                                 Quer saber quem está por trás do projeto?
                             </TimelineContent>
@@ -249,7 +242,11 @@ export default function QuemSomos() {
                                 animationNum={9}
                                 customVariants={variantesRevelar}
                             >
-                                <BotaoSeta cor="#bc002d" onClick={() => setModalAberto(true)}>
+                                <BotaoSeta
+                                    cor="#1c1b19"
+                                    className="btn-seta--escuro shadow-lg shadow-black/20"
+                                    onClick={() => setModalAberto(true)}
+                                >
                                     CONHEÇA O DESENVOLVEDOR
                                 </BotaoSeta>
                             </TimelineContent>
