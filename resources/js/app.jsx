@@ -55,6 +55,12 @@ function montarIlhas() {
 function iniciar() {
     montarIlhas();
     pausarHero3DForaDaTela();
+
+    /* A página "Planeje a sua viagem" carrega gsap, swiper e cobe — só quando
+       ela está na tela. Import dinâmico para não pesar as outras rotas. */
+    if (document.querySelector('[data-planeje]')) {
+        import('@/planeje').catch((e) => console.error('[MyJapan] falha ao carregar a página de planejamento', e));
+    }
 }
 
 if (document.readyState === 'loading') {
