@@ -46,9 +46,12 @@ if (alvo) {
         scrollTrigger: { trigger: alvo, start: '0% 0%', end: '100% 0%', scrub: 0.6, invalidateOnRefresh: true },
     });
     [
-        { camada: '1', yPercent: 70 },
-        { camada: '2', yPercent: 55 },
-        { camada: '3', yPercent: 40 },
+        // 100% = a camada anda exatamente o mesmo que o scroll (o trigger tem a
+        // altura da própria camada), então o fundo fica travado na tela e o topo
+        // do banner não se mexe. As de cima andam menos = parallax.
+        { camada: '1', yPercent: 93 },
+        { camada: '2', yPercent: 93 },
+        { camada: '3', yPercent: 50 },
         { camada: '4', yPercent: 10 },
     ].forEach((o, i) => {
         tl.to(alvo.querySelectorAll(`[data-parallax-layer="${o.camada}"]`), { yPercent: o.yPercent, ease: 'none' }, i === 0 ? undefined : '<');

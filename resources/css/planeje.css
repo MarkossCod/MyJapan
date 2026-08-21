@@ -31,6 +31,9 @@
   will-change:transform;transform:translateZ(0);backface-visibility:hidden}
 .pv .parallax__veu{position:absolute;inset:0;will-change:transform;transform:translateZ(0);
   background:radial-gradient(120% 85% at 50% 25%,#0000 30%,#1c1b1959 78%,#1c1b1994 100%)}
+/* folga de 30px acima do fundo: o scrub tem inércia e sem ela uma rolagem
+   brusca para cima descobre uma faixa clara no topo do banner. */
+.pv [data-parallax-layer="1"],.pv [data-parallax-layer="2"]{top:-30px;height:calc(100% + 60px)}
 .pv .parallax__layer-title{position:absolute;inset:0;display:grid;place-items:center;padding-inline:1.5rem;
   padding-bottom:14vh;will-change:transform;transform:translateZ(0)}
 .pv .parallax__title{margin:0;text-align:center;color:#fff;font-weight:700;letter-spacing:-.03em;line-height:.95;
@@ -115,7 +118,8 @@
   text-transform:uppercase;color:#0007}
 .pv .pl-trilha span{padding:.25rem .6rem;border-radius:99px;border:1px solid #0002}
 .pv .pl-trilha span.ativo{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
-.pv .pl__corpo{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth;padding:1.3rem}
+.pv .pl__corpo{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth;padding:1.3rem;scrollbar-width:none;-ms-overflow-style:none}
+.pv .pl__corpo::-webkit-scrollbar{width:0;height:0;display:none}
 .pv .pl-passo{display:none}
 .pv .pl-passo.ativo{display:block;animation:pl-entra .3s cubic-bezier(.16,1,.3,1) both}
 @keyframes pl-entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
